@@ -17,6 +17,14 @@ class Player:
         pass
 
 
+class RockPlayer(Player):
+    """Always play 'rock' in the game."""
+
+    def move(self):
+        """Return 'rock' every time."""
+        return 'rock'
+
+
 class RandomPlayer(Player):
     """Play random moves in the game."""
 
@@ -174,7 +182,8 @@ if __name__ == '__main__':
         "Choose an opponent:\n"
         "1. RandomPlayer\n"
         "2. ReflectPlayer\n"
-        "3. CyclePlayer"
+        "3. CyclePlayer\n"
+        "4. RockPlayer"
     )
     choice = input("Enter the number of your choice: ")
     if choice == '1':
@@ -182,6 +191,8 @@ if __name__ == '__main__':
     elif choice == '2':
         opponent = ReflectPlayer()
     elif choice == '3':
+        opponent = CyclePlayer()
+    elif choice == '4':
         opponent = CyclePlayer()
     else:
         print("Invalid choice! Defaulting to RandomPlayer.")
