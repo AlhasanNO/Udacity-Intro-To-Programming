@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-transform: capitalize;
+}
+
+ul {
+    list-style: none;
+}
+
+.card {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+
+}
+
+.contaner {
+    gap: 20px;
+    width: 500px;
+    padding: 20px;
+    border: solid 1px black;
+    border-radius: 10%;
+    box-shadow: 5px 10px #613131;
+
+}
+
+img {
+    width: 300px;
+    border: solid 1px black;
+    border-radius: 13%;
+}
+
+.text {
+    padding: 20px;
+    border: solid 1px black;
+    border-radius: 13%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+p {
+    font-style: italic;
+}
+
+ul li {
+    display: flex;
+    align-items: center;
+}
+
+ul li span {
+    font-style: bold;
+}
+
+h4 {
+    text-transform: lowercase;
+}
