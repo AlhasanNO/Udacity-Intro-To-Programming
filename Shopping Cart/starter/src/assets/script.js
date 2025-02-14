@@ -39,12 +39,14 @@ function findCartItemById(productId) {
 function addProductToCart(productId) {
   const product = findProductById(productId);
   const cartItem = findCartItemById(productId);
+
   if (cartItem) {
     // If the product is already in the cart, increase its quantity
     cartItem.quantity += 1;
   } else {
     // If the product is not in the cart, add it with a quantity of 1
-    cart.push({ ...product, quantity: 1 });
+    product.quantity = 1;
+    cart.push(product);
   }
 }
 
@@ -70,14 +72,13 @@ function decreaseQuantity(productId) {
   }
 }
 
-// Helper function to filter out a cart item by productId
-function filterCartByProductId(productId) {
-  return cart.filter(item => item.productId !== productId);
-}
-
 // Function to remove a product from the cart
 function removeProductFromCart(productId) {
-  cart = filterCartByProductId(productId);
+  const product = findCartItemById(productId);
+
+  if (product) {
+    cart.splice(cart.indexOf(product), 1);
+  }
 }
 
 // Helper function to calculate the total cost of the cart
@@ -92,14 +93,27 @@ function cartTotal() {
 
 // Function to empty the cart and reset the totalPaid amount
 function emptyCart() {
+  cart.forEach(item => {
+    const product = findCartItemById(productId);
+    if (product) {
+      product.quantity += item.quantity;
+    }
+  });
+
   cart = [];
-  totalPaid = 0;
 }
 
 // Function to handle payment
 function pay(amount) {
-  totalPaid += amount;
   const total = cartTotal();
+
+  // Ensure the amount paid is at least the cart total
+  if (amount < total) {
+    console.error("Payment failed: Amount paid is less than the cart total.");
+    return amount;
+  }
+
+  totalPaid += amount;
   const remainingBalance = totalPaid - total;
 
   // Check if the remaining balance is greater than or equal to 0
