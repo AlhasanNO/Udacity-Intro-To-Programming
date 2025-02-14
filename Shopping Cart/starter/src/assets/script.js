@@ -98,9 +98,17 @@ function emptyCart() {
 
 // Function to handle payment
 function pay(amount) {
+  totalPaid += amount;
   const total = cartTotal();
-  const difference = amount - total;
-  return difference;
+  const remainingBalance = totalPaid - total;
+
+  // Check if the remaining balance is greater than or equal to 0
+  if (remainingBalance >= 0) {
+    totalPaid = 0;
+    emptyCart();
+  }
+
+  return remainingBalance;
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
