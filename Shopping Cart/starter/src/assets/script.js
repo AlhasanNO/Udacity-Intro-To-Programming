@@ -25,50 +25,82 @@ const products = [
   }
 ];
 
+// Function to find a product by its productId
+function findProductById(productId) {
+  return products.find(p => p.productId === productId);
+}
+
+// Function to find an item in the cart by its productId
+function findCartItemById(productId) {
+  return cart.find(item => item.productId === productId);
+}
+
+// Function to add a product to the cart
 function addProductToCart(productId) {
-  const product = products.find(p => p.productId === productId);
-  const cartItem = cart.find(item => item.productId === productId);
+  const product = findProductById(productId);
+  const cartItem = findCartItemById(productId);
   if (cartItem) {
+    // If the product is already in the cart, increase its quantity
     cartItem.quantity += 1;
   } else {
+    // If the product is not in the cart, add it with a quantity of 1
     cart.push({ ...product, quantity: 1 });
   }
 }
 
+// Function to increase the quantity of a product in the cart
 function increaseQuantity(productId) {
-  const cartItem = cart.find(item => item.productId === productId);
+  const cartItem = findCartItemById(productId);
   if (cartItem) {
+    // Increase the quantity by 1
     cartItem.quantity += 1;
   }
 }
 
+// Function to decrease the quantity of a product in the cart
 function decreaseQuantity(productId) {
-  const cartItem = cart.find(item => item.productId === productId);
+  const cartItem = findCartItemById(productId);
   if (cartItem) {
+    // Decrease the quantity by 1
     cartItem.quantity -= 1;
     if (cartItem.quantity === 0) {
+      // If the quantity reaches 0, remove the product from the cart
       removeProductFromCart(productId);
     }
   }
 }
 
-function removeProductFromCart(productId) {
-  cart = cart.filter(item => item.productId !== productId);
+// Helper function to filter out a cart item by productId
+function filterCartByProductId(productId) {
+  return cart.filter(item => item.productId !== productId);
 }
 
-function cartTotal() {
+// Function to remove a product from the cart
+function removeProductFromCart(productId) {
+  cart = filterCartByProductId(productId);
+}
+
+// Helper function to calculate the total cost of the cart
+function calculateCartTotal(cart) {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
 
+// Function to calculate the total cost of all items in the cart
+function cartTotal() {
+  return calculateCartTotal(cart);
+}
+
+// Function to empty the cart and reset the totalPaid amount
 function emptyCart() {
   cart = [];
   totalPaid = 0;
 }
 
+// Function to handle payment
 function pay(amount) {
-  totalPaid += amount;
   const total = cartTotal();
-  return totalPaid - total;
+  const difference = amount - total;
+  return difference;
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
