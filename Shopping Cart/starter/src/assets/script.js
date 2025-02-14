@@ -107,16 +107,17 @@ function emptyCart() {
 function pay(amount) {
   const total = cartTotal();
 
-  // Ensure the amount paid is at least the cart total
+  // If the amount paid is less than the cart total, return the amount still owed (negative)
   if (amount < total) {
-    console.error("Payment failed: Amount paid is less than the cart total.");
-    return amount;
+    const amountStillOwed = amount - total;
+    console.error(`Payment failed: Amount paid is less than the cart total. Amount still owed: ${-amountStillOwed}`);
+    return amountStillOwed;
   }
 
   totalPaid += amount;
   const remainingBalance = totalPaid - total;
 
-  // Check if the remaining balance is greater than or equal to 0
+  // If the remaining balance is positive or zero, reset totalPaid and empty the cart
   if (remainingBalance >= 0) {
     totalPaid = 0;
     emptyCart();
